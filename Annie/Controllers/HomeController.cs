@@ -12,6 +12,7 @@ namespace Annie.Controllers
 		[HttpGet]
 		public ActionResult Index ()
 		{
+
 			ViewData ["Message"] = "Welcome to ASP.NET MVC on Mono!";
 			return View ();
 		}

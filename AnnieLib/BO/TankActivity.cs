@@ -40,6 +40,17 @@ namespace BitworkSystem.Annie.BO
             get;
             set;
         }
+
+		public Guid BusinessDayId {
+			get;
+			set;
+		}
+
+		public BusinessDay BusinessDay
+		{
+			get;
+			set;
+		}
         public override string ToString()
         {
             return String.Format("Type :TankActivity| TankActivityId:{0}|ActivityType:{1}|TotalVolume:{2}|ActivityDate:{3}|TankId:{4}|Tank:{5}", this.TankActivityId, this.ActivityType, this.TotalVolume, this.ActivityDate, this.TankId, this.Tank);

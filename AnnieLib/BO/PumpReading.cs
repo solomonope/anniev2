@@ -52,6 +52,16 @@ namespace BitworkSystem.Annie.BO
             set;
 
         }
+		public Guid BusinessDayId {
+			get;
+			set;
+		}
+
+		public BusinessDay BusinessDay
+		{
+			get;
+			set;
+		}
         public override string ToString()
         {
             return String.Format("Type : PumpReading | PumpReadingId:{0}|ReadingDate:{1}|SalesRate:{2}|StartOfBusiness:{3}|CloseOfBusiness:{4}|TotalVolumeSold:{5}}PumpId:{6}}Tank:{7}", this.PumpReadingId, this.ReadingDate, this.SalesRate, this.StartOfBusiness, this.CloseOfBusiness, this.TotalVolumeSold, this.PumpId, this.Pump);

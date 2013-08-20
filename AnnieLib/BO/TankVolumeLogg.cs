@@ -35,10 +35,22 @@ namespace BitworkSystem.Annie.BO
             get;
             set;
         }
+
+		public Guid BusinessDayId {
+			get;
+			set;
+		}
+
+		public BusinessDay BusinessDay
+		{
+			get;
+			set;
+		}
         public DateTime DateTimeOfLogg
         {
             get;
             set;
         }
+
     }
 }
