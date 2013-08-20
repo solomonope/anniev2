@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Annie", "Annie\Annie.csproj", "{FAB454A3-2D5B-49D8-8B70-05D603D1CBED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnnieLib", "AnnieLib\AnnieLib.csproj", "{8BD5AB49-AFF5-417F-B12E-22A89B052A3E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8BD5AB49-AFF5-417F-B12E-22A89B052A3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BD5AB49-AFF5-417F-B12E-22A89B052A3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BD5AB49-AFF5-417F-B12E-22A89B052A3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BD5AB49-AFF5-417F-B12E-22A89B052A3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAB454A3-2D5B-49D8-8B70-05D603D1CBED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAB454A3-2D5B-49D8-8B70-05D603D1CBED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAB454A3-2D5B-49D8-8B70-05D603D1CBED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAB454A3-2D5B-49D8-8B70-05D603D1CBED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Annie\Annie.csproj
+	EndGlobalSection
+EndGlobal
