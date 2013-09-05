@@ -127,8 +127,9 @@ namespace BitworkSystem.Annie.DAL
             try
             {
 				string _Sql = "DELETE from businessdayreport WHERE Id = @Id";
-                
-				var _Count = MySqlHelper.ExecuteNonQuery(AppConfig.ConnString,_Sql,new MySqlParameter(){ParameterName="@Id",MySqlDbType = MySqlDbType.VarChar, Value = _T.ToString()});
+
+				var _Parameter =  new MySqlParameter(){ParameterName="@Id",MySqlDbType = MySqlDbType.VarChar, Value = _T.ToString()};
+				var _Count = MySqlHelper.ExecuteNonQuery(AppConfig.ConnString,_Sql,_Parameter);
                 return true;
             }
             catch (Exception Ew)
