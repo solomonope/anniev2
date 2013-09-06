@@ -131,7 +131,10 @@ namespace BitworkSystem.Annie.DAL
             {
 				int _count = MySqlHelper.ExecuteNonQuery(AppConfig.ConnString,_Sql,new MySqlParameter{ParameterName="@StationId",MySqlDbType = MySqlDbType.VarChar, Value = _T.StationId.ToString()});
                 
-                return true;
+				if(_count > 0) return true;
+
+
+                return false;
             }
             catch (Exception Ew)
             {

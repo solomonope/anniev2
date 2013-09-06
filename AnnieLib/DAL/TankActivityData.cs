@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
 
 namespace BitworkSystem.Annie.DAL
 {
@@ -22,11 +23,39 @@ namespace BitworkSystem.Annie.DAL
         {
             get 
             {
+				string _Sql = "SELECT * FROM TankActivities";
+				MySqlDataReader _Reader = null;
+				List<TankActivity> _TankActivities = null;
                 try
                 {
-                    return null;
+					_Reader = MySqlHelper.ExecuteReader(AppConfig.ConnString,_Sql);
+
+					if(_Reader != null)
+					{
+						if(_Reader.HasRows)
+						{
+
+							while(_Reader.Read())
+							{
+								var _TankActivity = new TankActivity
+								{
+									TankActivityId = Guid.Parse(_Reader["TankActivityId"].ToString()),
+									ActivityType   = (ActivityType)Convert.ToInt32(_Reader["ActivityType"]),
+									TotalVolume    = Convert.ToDouble(_Reader["TotalVolume"]),
+									ActivityDate   = Convert.ToDateTime(_Reader["ActivityDate"]),
+									TankId		   = Guid.Parse(_Reader["TankId"].ToString()),
+									Tank		  = null,
+									BusinessDayId = Guid.Parse(_Reader["BusinessDayId"].ToString()),
+									BusinessDay  =  null
+
+								};
+								_TankActivities.Add(_TankActivity);
+						}
+					}
+
                 }
-                catch (Exception Ew)
+					return _TankActivities as IQueryable<TankActivity>;
+				}catch (Exception Ew)
                 {
                     m_Logger.TraceException(Ew.Message, Ew);
                     return null;
@@ -36,10 +65,26 @@ namespace BitworkSystem.Annie.DAL
 
         public bool Save(TankActivity _T)
         {
-            try
+			string _Sql = "INSERT INTO TankActivities(TankActivityId,ActivityType,TotalVolume,ActivityDate,TankId,BusinessDayId) VALUES(@TankActivityId,@ActivityType,@TotalVolume,@ActivityDate,@TankId,@BusinessDayId)";
+			List<MySqlParameter> _Parameters = null;
+			try
             {
-               
-                return true;
+               _Parameters = new List<MySqlParameter>
+				{
+					new MySqlParameter(){ParameterName="@TankActivityId",MySqlDbType = MySqlDbType.VarChar, Value = _T.TankActivityId.ToString()},
+					new MySqlParameter(){ParameterName="@ActivityType",MySqlDbType = MySqlDbType.Int16, Value = _T.ActivityType},
+					new MySqlParameter(){ParameterName="@TotalVolume",MySqlDbType = MySqlDbType.Double, Value = _T.TotalVolume},
+					new MySqlParameter(){ParameterName="@ActivityDate",MySqlDbType = MySqlDbType.Datetime, Value = _T.ActivityDate},
+					new MySqlParameter(){ParameterName="@TankId",MySqlDbType = MySqlDbType.VarChar, Value = _T.TankId.ToString()},
+					new MySqlParameter(){ParameterName="@BusinessDayId",MySqlDbType = MySqlDbType.VarChar, Value = _T.BusinessDayId.ToString()},
+
+
+				};
+
+				int _count =  MySqlHelper.ExecuteNonQuery(AppConfig.ConnString,_Sql,_Parameters.ToArray());
+				if(_count >0) return true;
+
+                return false;
             }
             catch (Exception Ew)
             {
@@ -52,7 +97,7 @@ namespace BitworkSystem.Annie.DAL
         {
             try
             {
-                return null;
+                return this.All.Where(x=>x.TankActivityId.ToString() == Id).SingleOrDefault();
             }
             catch (Exception Ew)
             {
@@ -65,7 +110,7 @@ namespace BitworkSystem.Annie.DAL
         {
             try
             {
-                return null;
+                return this.All.Where(predicate);
                 
             }
             catch (Exception Ew)
@@ -77,11 +122,14 @@ namespace BitworkSystem.Annie.DAL
 
         public bool Delete(TankActivity _T)
         {
+			string _Sql = "DELETE FROM TankActivities WHERE TankId = @TankId";
             try
-            
             {
+				int _count = MySqlHelper.ExecuteNonQuery(AppConfig.ConnString,_Sql,new MySqlParameter{ParameterName="@TankId",MySqlDbType = MySqlDbType.VarChar, Value = _T.TankId.ToString()});
+
+				if(_count > 0) return true;
                 
-                return true;
+                return false;
             }
             catch (Exception Ew)
             {
