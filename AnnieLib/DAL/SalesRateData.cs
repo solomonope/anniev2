@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
 
 namespace BitworkSystem.Annie.DAL
 {
@@ -19,26 +20,62 @@ namespace BitworkSystem.Annie.DAL
             m_Logger = LogManager.GetCurrentClassLogger();
         }
         public IQueryable<SalesRate> All
-        {
-            get 
-            {
-                try
-                {
-                    return null;
-                }
-                catch (Exception Ew)
-                {
-                    m_Logger.TraceException(Ew.Message, Ew);
-                    return null;
-                }
-            }
-        }
+		{
+			get {
+				string _Sql = "SELECT * FROM SalesRates";
+				MySqlDataReader _Reader = null;
+				List<SalesRate> _SaleRates =  null;
+				try {
+					_Reader = MySqlHelper.ExecuteReader (AppConfig.ConnString, _Sql);
+					if (_Reader != null) {
+						_SaleRates = new List<SalesRate>();
+
+						if (_Reader.HasRows) 
+						{
+							while (_Reader.Read()) 
+							{
+								var _SalesRate = new SalesRate () 
+								{
+									SalesRateId =  Guid.Parse(_Reader["SalesRateId"].ToString()),
+									Rate =   Convert.ToDouble(_Reader["Rate"]),
+									FluidId =  Guid.Parse(_Reader["FluidId"].ToString()),
+									Fluid =  null
+
+								};
+
+								_SaleRates.Add (_SalesRate);
+							}
+						}
+					}
+					return _SaleRates as IQueryable<SalesRate>;
+				} catch (Exception Ew) {
+					m_Logger.TraceException (Ew.Message, Ew);
+					return null;
+				} finally {
+
+					if (_Reader != null) {
+
+						if (!_Reader.IsClosed)
+							_Reader.Close ();
+					}
+
+				}
+			}
+		}
 
         public bool Save(SalesRate _T)
         {
+				string _Sql = "INSERT INTO SaleRate(SalesRateId,Rate,FluidId) VALUES(@SalesRateId,@Rate,@FluidId)";
+				List<MySqlParameter> _Parameters = null;
             try
             {
-              
+              _Parameters = new List<MySqlParameter>()
+				{
+					new MySqlParameter(){ParameterName="@SalesRateId",MySqlDbType = MySqlDbType.VarChar, Value = _T.SalesRateId},
+					new MySqlParameter(){ParameterName="@Rate",MySqlDbType = MySqlDbType.Double, Value = _T.Rate},
+					new MySqlParameter(){ParameterName="@FluidId",MySqlDbType = MySqlDbType.VarChar, Value = _T.FluidId.ToString()}
+
+				};
                 return true;
             }
             catch (Exception Ew)
@@ -53,7 +90,7 @@ namespace BitworkSystem.Annie.DAL
         {
             try
             {
-				return null;
+				return this.All.Where(x => x.FluidId.ToString() == Id).SingleOrDefault();
             }
             catch (Exception Ew)
             {
@@ -66,7 +103,7 @@ namespace BitworkSystem.Annie.DAL
         {
             try
             {
-				return null;
+				return this.All.Where(predicate);
             }
             catch (Exception Ew)
             {
@@ -77,10 +114,15 @@ namespace BitworkSystem.Annie.DAL
 
         public bool Delete(SalesRate _T)
         {
+			string _Sql = "DELETE FROM SalesRates where SalesRateId = @SalesRateId";
             try
             {
-               
-                return true;
+
+				int _count = MySqlHelper.ExecuteNonQuery(AppConfig.ConnString,_Sql, new MySqlParameter(){ParameterName="@SalesRateId",MySqlDbType = MySqlDbType.VarChar, Value = _T.SalesRateId.ToString()} );  
+                
+				if(_count > 0) return true;
+
+				return false;
             }
             catch (Exception Ew)
             {

@@ -66,7 +66,16 @@ namespace BitworkSystem.Annie.DAL
                 {
                     m_Logger.TraceException(Ew.Message, Ew);
                     return null;
-                }
+                }finally{
+
+				if (_Reader != null) {
+
+						if (!_Reader.IsClosed)
+							_Reader.Close ();
+
+				}
+
+				}
             }
         }
 
