@@ -26,7 +26,7 @@ namespace BitworkSystem.Annie.DAL
             {
 				string _SQL = "SELECT * FROM  Fluids";
 				List<Fluid> _Fluids =  null;
-				MySqlReader _Reader = null;
+				MySqlDataReader _Reader = null;
                 try
                 {
 					_Reader =  MySqlHelper.ExecuteReader(AppConfig.ConnString,_SQL);
@@ -40,7 +40,7 @@ namespace BitworkSystem.Annie.DAL
 							{
 								var _Fluid  =  new Fluid()
 								{
-									FluidId =  Convert.ToGuid(_Reader["FluidId"]),
+									FluidId =  Guid.Parse(_Reader["FluidId"].ToString()),
 									FluidName =  _Reader["FluidName"].ToString(),
 									FluidCode  = _Reader["FluidCode"].ToString()
 								};
@@ -50,7 +50,7 @@ namespace BitworkSystem.Annie.DAL
 							}
 						}
 					}
-                   return _Fluids;
+                   return _Fluids as IQueryable<Fluid> ;
                 }
                 catch (Exception Ew)
                 {
@@ -68,11 +68,12 @@ namespace BitworkSystem.Annie.DAL
 
 				var _Parameters = new  List<MySqlParameter>()
 				{
-					new MySqlParameter(){ParameterName="@FluidId",MySqlDbType = MySqlDbType.VarChar, Value = _T.ToString()},
-					new MySqlParameter(){ParameterName="@FluidName",MySqlDbType = MySqlDbType.VarChar, Value = _T.ToString()},
-					new MySqlParameter(){ParameterName="@FluidCode",MySqlDbType = MySqlDbType.VarChar, Value = _T.ToString()}
+					new MySqlParameter(){ParameterName="@FluidId",MySqlDbType = MySqlDbType.VarChar, Value = _T.FluidId.ToString()},
+					new MySqlParameter(){ParameterName="@FluidName",MySqlDbType = MySqlDbType.VarChar, Value = _T.FluidName.ToString()},
+					new MySqlParameter(){ParameterName="@FluidCode",MySqlDbType = MySqlDbType.VarChar, Value = _T.FluidCode.ToString()}
 				};
                 
+				MySqlHelper.ExecuteNonQuery(AppConfig.ConnString,_Sql,_Parameters.ToArray());
                 return true;
             }
             catch (Exception Ew)
@@ -114,11 +115,11 @@ namespace BitworkSystem.Annie.DAL
         {
             try
             {
-				String _SQL = "DELETE FROM Fluids where FluidId = @FluidId";
+				String _SQL = "DELETE FROM Fluids WHERE FluidId = @FluidId";
 
-				var _Count = MySqlHelper.ExecuteScalar(AppConfig.ConnString,_SQL,new MySqlParameter(){ParameterName="@FluidId",MySqlDbType = MySqlDbType.VarChar, Value = _T.FluidId.ToString()});
+				int _Count = (int)MySqlHelper.ExecuteNonQuery(AppConfig.ConnString,_SQL,new MySqlParameter(){ParameterName="@FluidId",MySqlDbType = MySqlDbType.VarChar, Value = _T.FluidId.ToString()});
 
-				if(_Count >0) return true;
+				if(_Count > 0) return true;
 			
                 return false;
             }

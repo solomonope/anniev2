@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
 
 namespace BitworkSystem.Annie.DAL
 {
@@ -23,9 +24,35 @@ namespace BitworkSystem.Annie.DAL
         {
             get 
             {
+				string _SQL = "SELECT * FROM Pumps";
+				MySqlDataReader _Reader = null;
+				List<Pump> _Pumps = null;
                 try
                 {
-                    return null;
+					_Reader =  MySqlHelper.ExecuteReader(AppConfig.ConnString,_SQL);
+					if(_Reader != null)
+					{
+						if(_Reader.HasRows)
+						{
+							while(_Reader.Read())
+							{
+								var _Pump = new Pump()
+								{
+									PumpId 			= 	Guid.Parse (_Reader["PumpId"].ToString()),
+									PumpName	    =  	_Reader["PumpName"].ToString(),
+									PumpReadings  	= 	null,
+									PumpSales 		=  	null,
+									FluidId 		=   Guid.Empty,
+									Fluid 			=	null,
+									Serviceable 	=   Convert.ToBoolean(_Reader["Serviceable"]) 
+
+								};
+
+								_Pumps.Add(_Pump);
+							}
+						}
+					}
+					return _Pumps as IQueryable<Pump>;
                 }
                 catch (Exception Ew)
                 {
@@ -37,9 +64,17 @@ namespace BitworkSystem.Annie.DAL
 
         public bool Save(Pump _T)
         {
+			string _SQL = "INSERT INTO Pumps(PumpId,PumpName,Serviceable) VALUES(@PumpId,@PumpName,@Serviceable)";
+			List<MySqlParameter> _Parameters = null;
             try
             {
-                
+                _Parameters =  new List<MySqlParameter>()
+				{
+					new MySqlParameter(){ParameterName="@PumpId",MySqlDbType = MySqlDbType.VarChar, Value = _T.PumpId.ToString()},
+					new MySqlParameter(){ParameterName="@PumpName",MySqlDbType = MySqlDbType.VarChar, Value = _T.PumpName.ToString()},
+					new MySqlParameter(){ParameterName="@Serviceable",MySqlDbType = MySqlDbType.Bit, Value = _T.Serviceable.ToString()}
+				};
+				MySqlHelper.ExecuteNonQuery(AppConfig.ConnString,_SQL,_Parameters.ToArray());
                 return true;
             }
             catch (Exception Ew)
@@ -53,7 +88,7 @@ namespace BitworkSystem.Annie.DAL
         {
             try
             {
-                return null;
+                return this.All.Where(x=> x.Fluid.ToString() == Id).SingleOrDefault();
             }
             catch (Exception Ew)
             {
@@ -67,7 +102,7 @@ namespace BitworkSystem.Annie.DAL
         {
             try
             {
-                return null;
+                return this.All.Where(predicate);
             }
             catch (Exception Ew)
             {
@@ -78,11 +113,14 @@ namespace BitworkSystem.Annie.DAL
 
         public bool Delete(Pump _T)
         {
+			string _SQL = "DELETE FROM Pump WHERE PumpId = @PumpId ";
 
             try
             {
-               
-                return true;
+				int _Count = (int)MySqlHelper.ExecuteNonQuery(AppConfig.ConnString,_SQL,new MySqlParameter(){ParameterName="@PumpId",MySqlDbType = MySqlDbType.VarChar, Value = _T.PumpId.ToString()});
+
+				if(_Count > 0) return true;
+                return false;
             }
             catch (Exception Ew)
             {
