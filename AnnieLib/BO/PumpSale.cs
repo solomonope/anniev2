@@ -35,6 +35,7 @@ namespace BitworkSystem.Annie.BO
             get;
             set;
         }
+
         public DateTime DateTimeOfSale
         {
             get;

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using MySql.Data.MySqlClient;
 namespace BitworkSystem.Annie.DAL
 {
     public class PumpSaleData :IRepository<PumpSale>,IDisposable
@@ -22,9 +22,17 @@ namespace BitworkSystem.Annie.DAL
         {
             get
             {
+				string _Sql = "SELECT * FROM PumpSales";
+				MySqlDataReader _Reader = null;
+				List<PumpSale> _PumpSales = null;
+
                 try
                 {
-                    return null;
+					_Reader =  MySqlHelper.ExecuteReader(AppConfig.ConnString,_Sql);
+					if(_Reader != null){
+
+					}
+					return _PumpSales as IQueryable<PumpSale>;
                 }
                 catch (Exception Ew)
                 {
