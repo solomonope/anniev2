@@ -81,6 +81,7 @@
     <Compile Include="DAL\TankvolumeLoggData.cs" />
     <Compile Include="DAL\Contract\IRepository.cs" />
     <Compile Include="BO\AppConfig.cs" />
+    <Compile Include="BO\ValidationError.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
