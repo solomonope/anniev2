@@ -22,7 +22,7 @@ namespace BitworkSystem.Annie.DAL
         {
             get
             {
-				string _Sql = "SELECT * FROM ";
+				string _Sql = "SELECT * FROM TankReadings";
 				MySqlDataReader _Reader = null;
 				List<TankReading> _TankReadings = null;
 
@@ -81,7 +81,7 @@ namespace BitworkSystem.Annie.DAL
 
         public bool Save(TankReading _T)
         {
-			string _Sql = "INSERT INTO TankReading(TankReadingId,ReadingDate,SalesRate,StartOfBusiness,CloseOfBusiness,TotalVolumeSold,TankId,BusinessDayId) VALUES(@TankReadingId,@ReadingDate,@SalesRate,@StartOfBusiness,@CloseOfBusiness,@TotalVolumeSold,@TankId,@BusinessDayId)";
+			string _Sql = "INSERT INTO TankReadings (TankReadingId,ReadingDate,SalesRate,StartOfBusiness,CloseOfBusiness,TotalVolumeSold,TankId,BusinessDayId) VALUES(@TankReadingId,@ReadingDate,@SalesRate,@StartOfBusiness,@CloseOfBusiness,@TotalVolumeSold,@TankId,@BusinessDayId)";
 			List<MySqlParameter> _Parameters = null;
 			try
             {
@@ -140,7 +140,7 @@ namespace BitworkSystem.Annie.DAL
 
         public bool Delete(TankReading _T)
         {
-			string _Sql = "DELETE FROM TankReading WHERE TankReadingId = @TankReadingId";
+			string _Sql = "DELETE FROM TankReadings WHERE TankReadingId = @TankReadingId";
             try
             {
 				int _Count = MySqlHelper.ExecuteNonQuery(AppConfig.ConnString,_Sql,new MySqlParameter{ParameterName="@TankReadingId",MySqlDbType = MySqlDbType.VarChar, Value = _T.TankReadingId.ToString()});
@@ -156,6 +156,39 @@ namespace BitworkSystem.Annie.DAL
             }
         }
 
+		public bool  Update(TankReading _T){
+
+			string _Sql = "UPDATE TankReadings SET ReadingDate =  @ReadingDate ,SalesRate =  @SalesRate ,StartOfBusiness = @StartOfBusiness ,CloseOfBusiness =  @CloseOfBusiness,TotalVolumeSold = @TotalVolumeSold ,TankId = @TankId ,BusinessDayId = @BusinessDayId WHERE TankReadingId = @TankReadingId";
+			List<MySqlParameter> _Parameters = null;
+			try
+			{
+				_Parameters =  new List<MySqlParameter>
+				{
+					new MySqlParameter{ParameterName="@TankReadingId",MySqlDbType = MySqlDbType.VarChar, Value = _T.TankReadingId.ToString()},
+					new MySqlParameter{ParameterName="@ReadingDate",MySqlDbType = MySqlDbType.Datetime, Value = _T.ReadingDate},
+					new MySqlParameter{ParameterName="@StartOfBusiness",MySqlDbType = MySqlDbType.Double, Value = _T.StartOfBusiness},
+					new MySqlParameter{ParameterName="@CloseOfBusiness",MySqlDbType = MySqlDbType.Double, Value = _T.CloseOfBusiness},
+					new MySqlParameter{ParameterName="@TotalVolumeSold",MySqlDbType = MySqlDbType.Double, Value = _T.TotalVolumeSold},
+					new MySqlParameter{ParameterName="@TankId",MySqlDbType = MySqlDbType.VarChar, Value = _T.TankId.ToString()},
+					new MySqlParameter{ParameterName="@BusinessDayId",MySqlDbType = MySqlDbType.VarChar, Value = _T.BusinessDayId.ToString()},
+					new MySqlParameter{ParameterName="@SalesRate",MySqlDbType = MySqlDbType.Double, Value = _T.SalesRate}
+
+				};
+
+				int _Count = MySqlHelper.ExecuteNonQuery(AppConfig.ConnString,_Sql,_Parameters.ToArray());
+
+				if(_Count >0) return true;
+
+				return false;
+			}
+			catch (Exception Ew)
+			{
+				m_Logger.TraceException(Ew.Message, Ew);
+				return false;
+
+			}
+
+		}
         public void Dispose()
         {
             Dispose(true);

@@ -5,12 +5,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Annie", "Annie\Annie.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnnieLib", "AnnieLib\AnnieLib.csproj", "{8BD5AB49-AFF5-417F-B12E-22A89B052A3E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnnieTest", "AnnieTest\AnnieTest.csproj", "{5BE59979-0373-4725-B635-0D2C56ECBE9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5BE59979-0373-4725-B635-0D2C56ECBE9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BE59979-0373-4725-B635-0D2C56ECBE9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BE59979-0373-4725-B635-0D2C56ECBE9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BE59979-0373-4725-B635-0D2C56ECBE9A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8BD5AB49-AFF5-417F-B12E-22A89B052A3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8BD5AB49-AFF5-417F-B12E-22A89B052A3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BD5AB49-AFF5-417F-B12E-22A89B052A3E}.Release|Any CPU.ActiveCfg = Release|Any CPU

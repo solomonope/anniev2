@@ -152,6 +152,37 @@ namespace BitworkSystem.Annie.DAL
             }
         }
 
+
+		public bool Update(TankVolumeLogg _T){
+			string _Sql = "UPDATE TankVolume SET TankId = @TankId,Volume = @Volume ,SellingRate = @SellingRate ,BusinessDayId = @BusinessDayId ,DateTimeOfLogg  = @DateTimeOfLogg WHERE TankVolumeLoggId = @TankVolumeLoggId";
+			List<MySqlParameter> _Parameters = null;
+			try
+			{
+				_Parameters = new List<MySqlParameter>
+				{
+					new MySqlParameter{ParameterName="@TankVolumeLoggId",MySqlDbType = MySqlDbType.VarChar, Value = _T.TankVolumeLoggId.ToString()},
+					new MySqlParameter{ParameterName="@TankId",MySqlDbType = MySqlDbType.VarChar, Value = _T.TankId.ToString()},
+					new MySqlParameter{ParameterName="@Volume",MySqlDbType = MySqlDbType.Double, Value = _T.Volume},
+					new MySqlParameter{ParameterName="@SellingRate",MySqlDbType = MySqlDbType.Double, Value = _T.SellingRate},
+					new MySqlParameter{ParameterName="@BusinessDayId",MySqlDbType = MySqlDbType.VarChar, Value = _T.BusinessDayId.ToString()},
+					new MySqlParameter{ParameterName="@DateTimeOfLogg",MySqlDbType = MySqlDbType.Datetime, Value = _T.DateTimeOfLogg},
+
+
+
+				};
+
+				int _Count =  MySqlHelper.ExecuteNonQuery(AppConfig.ConnString,_Sql,_Parameters.ToArray());
+				if(_Count >0 ) return true;
+
+				return false;
+			}
+			catch (Exception Ew)
+			{
+				m_Logger.TraceException(Ew.Message, Ew);
+				return false;
+			}
+
+		}
         public void Dispose()
         {
             Dispose(true);

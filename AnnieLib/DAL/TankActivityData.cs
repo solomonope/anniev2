@@ -144,6 +144,37 @@ namespace BitworkSystem.Annie.DAL
                 return false;
             }
         }
+
+		public bool Update(TankActivity _T){
+
+			string _Sql = "INSERT INTO TankActivities SET  ActivityType = @ActivityType ,TotalVolume = @TotalVolume , ActivityDate =  @ActivityDate,TankId = @TankId , BusinessDayId = @BusinessDayId WHERE TankActivityId = @TankActivityId";
+			List<MySqlParameter> _Parameters = null;
+			try
+			{
+				_Parameters = new List<MySqlParameter>
+				{
+					new MySqlParameter(){ParameterName="@TankActivityId",MySqlDbType = MySqlDbType.VarChar, Value = _T.TankActivityId.ToString()},
+					new MySqlParameter(){ParameterName="@ActivityType",MySqlDbType = MySqlDbType.Int16, Value = _T.ActivityType},
+					new MySqlParameter(){ParameterName="@TotalVolume",MySqlDbType = MySqlDbType.Double, Value = _T.TotalVolume},
+					new MySqlParameter(){ParameterName="@ActivityDate",MySqlDbType = MySqlDbType.Datetime, Value = _T.ActivityDate},
+					new MySqlParameter(){ParameterName="@TankId",MySqlDbType = MySqlDbType.VarChar, Value = _T.TankId.ToString()},
+					new MySqlParameter(){ParameterName="@BusinessDayId",MySqlDbType = MySqlDbType.VarChar, Value = _T.BusinessDayId.ToString()},
+
+
+				};
+
+				int _count =  MySqlHelper.ExecuteNonQuery(AppConfig.ConnString,_Sql,_Parameters.ToArray());
+				if(_count >0) return true;
+
+				return false;
+			}
+			catch (Exception Ew)
+			{
+				m_Logger.TraceException(Ew.Message, Ew);
+				return false;
+			}
+
+		}
         public void Dispose()
         {
             Dispose(true);

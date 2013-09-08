@@ -135,6 +135,28 @@ namespace BitworkSystem.Annie.DAL
         }
 
 
+		public bool Update(Pump _T)
+		{
+			string _SQL = "UPDATE Pumps SET PumpName = @PumpName,Serviceable = @Serviceable  WHERE PumpId = @PumpId";
+			List<MySqlParameter> _Parameters = null;
+			try
+			{
+				_Parameters =  new List<MySqlParameter>()
+				{
+					new MySqlParameter(){ParameterName="@PumpId",MySqlDbType = MySqlDbType.VarChar, Value = _T.PumpId.ToString()},
+					new MySqlParameter(){ParameterName="@PumpName",MySqlDbType = MySqlDbType.VarChar, Value = _T.PumpName.ToString()},
+					new MySqlParameter(){ParameterName="@Serviceable",MySqlDbType = MySqlDbType.Bit, Value = _T.Serviceable.ToString()}
+				};
+				MySqlHelper.ExecuteNonQuery(AppConfig.ConnString,_SQL,_Parameters.ToArray());
+				return true;
+			}
+			catch (Exception Ew)
+			{
+				m_Logger.TraceException(Ew.Message, Ew);
+				return false;
+			}
+		}
+
         public void Dispose()
         {
             Dispose(true);

@@ -140,6 +140,30 @@ namespace BitworkSystem.Annie.DAL
             }
         }
 
+
+		public bool Update(BusinessDayReport _T){
+
+			try
+			{
+				string _Sql = "INSERT INTO businessdayreport() VALUES(@Id,?)";
+
+				var _Parameters =  new List<MySqlParameter>()
+				{
+					new MySqlParameter(){ParameterName="",MySqlDbType = MySqlDbType.VarChar, Value = _T.ToString()}
+				};
+
+				MySqlHelper.ExecuteNonQuery(AppConfig.ConnString,_Sql,_Parameters.ToArray());
+
+
+				return true;
+			}
+			catch (Exception Ew)
+			{
+				m_Logger.TraceException(Ew.Message, Ew);
+				return false;
+			}
+
+		}
         public void Dispose()
         {
             Dispose(true);

@@ -134,6 +134,30 @@ namespace BitworkSystem.Annie.DAL
             }
         }
 
+		public bool Update(Fluid _T){
+
+			try
+			{
+				string _Sql = "UPDATE Fluid SET FluidName = @FluidName,FluidCode = @FluidCode WHERE FluidId  = @FluidId";
+
+				var _Parameters = new  List<MySqlParameter>()
+				{
+					new MySqlParameter(){ParameterName="@FluidId",MySqlDbType = MySqlDbType.VarChar, Value = _T.FluidId.ToString()},
+					new MySqlParameter(){ParameterName="@FluidName",MySqlDbType = MySqlDbType.VarChar, Value = _T.FluidName.ToString()},
+					new MySqlParameter(){ParameterName="@FluidCode",MySqlDbType = MySqlDbType.VarChar, Value = _T.FluidCode.ToString()}
+				};
+
+				MySqlHelper.ExecuteNonQuery(AppConfig.ConnString,_Sql,_Parameters.ToArray());
+				return true;
+			}
+			catch (Exception Ew)
+			{
+				m_Logger.TraceException(Ew.Message, Ew);
+				return false;
+			}
+
+		}
+
         public void Dispose()
         {
             Dispose(true);

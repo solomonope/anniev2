@@ -81,7 +81,7 @@ namespace BitworkSystem.Annie.DAL
 
         public bool Save(PumpReading _T)
         {
-			string _Sql = "INSERT INTO PumpReadings(PumpReadingId,PumpId,SalesRate,ReadingDate,StartOfBusiness,CloseOfBusiness,TotalVolumeSold,BusinessDayId`) VALUES(@PumpReadingId,@PumpId,@SalesRate,@ReadingDate,@StartOfBusiness,@CloseOfBusiness,@TotalVolumeSold,@BusinessDayId)";
+			string _Sql = "INSERT INTO PumpReadings(PumpReadingId,PumpId,SalesRate,ReadingDate,StartOfBusiness,CloseOfBusiness,TotalVolumeSold,BusinessDayId) VALUES(@PumpReadingId,@PumpId,@SalesRate,@ReadingDate,@StartOfBusiness,@CloseOfBusiness,@TotalVolumeSold,@BusinessDayId)";
 			List<MySqlParameter> _Parameters = null;
             try
             {
@@ -152,6 +152,37 @@ namespace BitworkSystem.Annie.DAL
             }
         }
 
+		public bool Update(PumpReading _T)
+		{
+			string _Sql = "UPDATE PumpReadings SET PumpId = @PumpId,SalesRate = @SalesRate,ReadingDate = @ReadingDate,StartOfBusiness = @StartOfBusiness,CloseOfBusiness = @CloseOfBusiness,TotalVolumeSold = @TotalVolumeSold,BusinessDayId  = @BusinessDayId WHERE PumpReadingId = @PumpReadingId";
+			List<MySqlParameter> _Parameters = null;
+			try
+			{
+				_Parameters = new List<MySqlParameter>()
+				{
+					new MySqlParameter(){ParameterName="@PumpReadingId",MySqlDbType = MySqlDbType.VarChar, Value = _T.PumpReadingId.ToString()},
+					new MySqlParameter(){ParameterName="@PumpId",MySqlDbType = MySqlDbType.VarChar, Value = _T.PumpId.ToString()},
+					new MySqlParameter(){ParameterName="@SalesRate",MySqlDbType = MySqlDbType.Double, Value = _T.SalesRate},
+					new MySqlParameter(){ParameterName="@ReadingDate",MySqlDbType = MySqlDbType.Datetime, Value = _T.ReadingDate},
+					new MySqlParameter(){ParameterName="@StartOfBusiness",MySqlDbType = MySqlDbType.Double, Value = _T.StartOfBusiness},
+					new MySqlParameter(){ParameterName="@CloseOfBusiness",MySqlDbType = MySqlDbType.Double, Value = _T.CloseOfBusiness},
+					new MySqlParameter(){ParameterName="@TotalVolumeSold",MySqlDbType = MySqlDbType.Double, Value = _T.TotalVolumeSold},
+					new MySqlParameter(){ParameterName="@BusinessDayId",MySqlDbType = MySqlDbType.VarChar, Value = _T.BusinessDayId}
+
+				};
+
+				int _Count = MySqlHelper.ExecuteNonQuery(AppConfig.ConnString,_Sql,_Parameters.ToArray());
+				if(_Count >0) return true;
+
+				return false;
+			}
+			catch (Exception Ew)
+			{
+				m_Logger.TraceException(Ew.Message, Ew);
+				return false;
+			}
+
+		}
         public void Dispose()
         {
             Dispose(true);

@@ -138,6 +138,34 @@ namespace BitworkSystem.Annie.DAL
             }
         }
 
+
+		public bool Update(PumpSale _T){
+			string _Sql = "UPDATE PumpSales SET PumpId = @PumpId,SoldVolume = @SoldVolume,SalesRate  = @SalesRate ,DateTimeOfSale = @DateTimeOfSale WHERE PumpSaleId = @PumpSaleId";
+			List<MySqlParameter> _Parameters = null;
+			try
+			{
+				_Parameters = new List<MySqlParameter>()
+				{
+					new MySqlParameter(){ParameterName="@PumpSaleId",MySqlDbType = MySqlDbType.VarChar, Value = _T.PumpSaleId.ToString()},
+					new MySqlParameter(){ParameterName="@PumpId",MySqlDbType = MySqlDbType.VarChar, Value = _T.PumpId.ToString()},
+					new MySqlParameter(){ParameterName="@SoldVolume",MySqlDbType = MySqlDbType.Double, Value = _T.SoldVolume},
+					new MySqlParameter(){ParameterName="@SalesRate",MySqlDbType = MySqlDbType.Double, Value = _T.SalesRate},
+					new MySqlParameter(){ParameterName="@DateTimeOfSale",MySqlDbType = MySqlDbType.Datetime, Value = _T.DateTimeOfSale}
+
+				};
+
+				int _Count = MySqlHelper.ExecuteNonQuery(AppConfig.ConnString,_Sql,_Parameters.ToArray());
+
+				if(_Count > 0) return true;
+				return false;
+			}
+			catch (Exception Ew)
+			{
+				m_Logger.TraceException(Ew.Message, Ew);
+				return false;
+			}
+
+		}
         public void Dispose()
         {
             Dispose(true);

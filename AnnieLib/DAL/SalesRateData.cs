@@ -65,7 +65,7 @@ namespace BitworkSystem.Annie.DAL
 
         public bool Save(SalesRate _T)
         {
-				string _Sql = "INSERT INTO SaleRate(SalesRateId,Rate,FluidId) VALUES(@SalesRateId,@Rate,@FluidId)";
+				string _Sql = "INSERT INTO SaleRates(SalesRateId,Rate,FluidId) VALUES(@SalesRateId,@Rate,@FluidId)";
 				List<MySqlParameter> _Parameters = null;
             try
             {
@@ -131,6 +131,30 @@ namespace BitworkSystem.Annie.DAL
             }
         }
 
+
+		public bool Update(SalesRate _T)
+		{
+
+			string _Sql = "UPDATE SaleRates  SET Rate =  @Rate, FluidId  =  @FluidId WHERE SalesRateId = @SalesRateId";
+			List<MySqlParameter> _Parameters = null;
+			try
+			{
+				_Parameters = new List<MySqlParameter>()
+				{
+					new MySqlParameter(){ParameterName="@SalesRateId",MySqlDbType = MySqlDbType.VarChar, Value = _T.SalesRateId},
+					new MySqlParameter(){ParameterName="@Rate",MySqlDbType = MySqlDbType.Double, Value = _T.Rate},
+					new MySqlParameter(){ParameterName="@FluidId",MySqlDbType = MySqlDbType.VarChar, Value = _T.FluidId.ToString()}
+
+				};
+				return true;
+			}
+			catch (Exception Ew)
+			{
+
+				m_Logger.TraceException(Ew.Message, Ew);
+				return false;
+			}
+		}
 
         public void Dispose()
         {

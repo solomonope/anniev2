@@ -143,6 +143,38 @@ namespace BitworkSystem.Annie.DAL
             }
         }
 
+		public bool Update(Station _T){
+
+
+			string _Sql = "UPDATE  Stations  SET StationUniqueKey = @StationUniqueKey , StationName = @StationName ,StationAdressLineOne = @StationAdressLineOne , StationAdressLineTwo = @StationAdressLineTwo,City = @City,State = @State WHERE StationId = @StationId";
+			List<MySqlParameter> _Parameters = null;
+			try
+			{
+				_Parameters  = new List<MySqlParameter>
+				{
+					new MySqlParameter(){ParameterName="@StationId",MySqlDbType = MySqlDbType.VarChar, Value = _T.StationId.ToString()},
+					new MySqlParameter(){ParameterName="@StationUniqueKey",MySqlDbType = MySqlDbType.VarChar, Value = _T.StationUniqueKey},
+					new MySqlParameter(){ParameterName="@StationName",MySqlDbType = MySqlDbType.VarChar, Value = _T.StationName},
+					new MySqlParameter(){ParameterName="@StationAdressLineOne",MySqlDbType = MySqlDbType.VarChar, Value = _T.StationAdressLineOne},
+					new MySqlParameter(){ParameterName="@StationAdressLineTwo",MySqlDbType = MySqlDbType.VarChar, Value = _T.StationAdressLineTwo},
+					new MySqlParameter(){ParameterName="@City",MySqlDbType = MySqlDbType.VarChar, Value = _T.City},
+					new MySqlParameter(){ParameterName="@State",MySqlDbType = MySqlDbType.VarChar, Value = _T.State},
+				};
+
+				int _count =  MySqlHelper.ExecuteNonQuery(AppConfig.ConnString,_Sql,_Parameters.ToArray());
+
+				if(_count >0) return true;
+
+				return false;
+			}
+			catch (Exception Ew)
+			{
+				m_Logger.TraceException(Ew.Message, Ew);
+				return false;
+
+			}
+
+		}
         public void Dispose()
         {
             Dispose(true);

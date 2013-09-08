@@ -16,5 +16,6 @@ namespace BitworkSystem.Annie.DAL.Contract
         T GetById(string Id);
         IQueryable<T> Search(Expression<Func<T, bool>> predicate);
         bool Delete(T _T);
+		bool Update(T _T);
     }
 }

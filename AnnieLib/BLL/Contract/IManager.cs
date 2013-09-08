@@ -9,5 +9,6 @@ namespace BitworkSystem.Annie.BLL.Contract
     //
     public interface IManager<T>
     {
+		//bool Validate(string _validationresponse);
     }
 }
