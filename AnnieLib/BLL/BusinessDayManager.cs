@@ -27,5 +27,10 @@ namespace BitworkSystem.Annie.BLL
                return (int)ResponseCodes.Failed;
            }
        }
+
+		bool Validate(List<ValidationError> _ValidationErrors)
+		{
+			return false;
+		}
     }
 }

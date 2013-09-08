@@ -18,5 +18,11 @@ namespace BitworkSystem.Annie.BLL
 
             m_Repository = Repository;
         }
+
+
+		bool Validate(List<ValidationError> _ValidationErrors)
+		{
+			return false;
+		}
     }
 }
