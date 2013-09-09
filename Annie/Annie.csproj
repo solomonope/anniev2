@@ -59,6 +59,18 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\BusinessDayController.cs" />
+    <Compile Include="Controllers\FluidController.cs" />
+    <Compile Include="Controllers\PumpController.cs" />
+    <Compile Include="Controllers\PumpReadingController.cs" />
+    <Compile Include="Controllers\PumpSaleController.cs" />
+    <Compile Include="Controllers\SalesRateController.cs" />
+    <Compile Include="Controllers\StationController.cs" />
+    <Compile Include="Controllers\TankController.cs" />
+    <Compile Include="Controllers\TankReadingController.cs" />
+    <Compile Include="Controllers\TankVolumeLoggController.cs" />
+    <Compile Include="Controllers\TankActivityController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />

@@ -24,7 +24,7 @@ namespace BitworkSystem.Annie.BLL
 
 		}
 
-		public	bool Validate(List<ValidationError> _ValidationErrors)
+		public	bool Validate(List<ValidationError> _ValidationErrors,BusinessDayReport _T )
 		{
 			return false;
 		}

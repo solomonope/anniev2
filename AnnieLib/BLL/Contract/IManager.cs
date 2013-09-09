@@ -9,6 +9,6 @@ namespace BitworkSystem.Annie.BLL.Contract
     //
     public interface IManager<T>
     {
-		bool Validate(List<ValidationError> _ValidationErrors);
+		bool Validate(List<ValidationError> _ValidationErrors ,T _T);
     }
 }
