@@ -33,7 +33,16 @@ namespace BitworkSystem.Annie.BLL
 					_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = " Business Object not Set" });
 					return false;
 				}
-				return false;
+				if (this.Validate(_T:BusinessDay,_ValidationErrors:_ValidationErrors))
+				{
+					return false;
+				}else
+				{
+
+				return m_Repository.Save(BusinessDay);
+
+				}
+
            }
            catch (Exception Ew)
            {
@@ -47,11 +56,35 @@ namespace BitworkSystem.Annie.BLL
 			string _RegexId = @"^[A-Za-z0-9]{8}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{12}$";
 			string _RegexDate = @"^\d{1,2}\/\d{1,2}\/\d{4}$";
 
-			if (!Regex.IsMatch (_T.BusinessDayId.ToString (), _RegexId))
+			if (_T.BusinessDayId == null) {
 				_State = false;
+				_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = " Business Object not Set" });
 
-			if (!Regex.IsMatch ("", ""))
+			}
+			if (_T.StartTime == null) {
 				_State = false;
+				_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = " Business Object not Set" });
+
+			}
+
+			if (_T.EndTime == null) {
+				_State = false;
+				_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = " Business Object not Set" });
+
+			}
+
+			if (_T.StartTime.Date != DateTime.Now.Date) {
+
+				_State = false;
+				_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = " Business Object not Set" });
+
+			}
+
+			if (_T.EndTime.TimeOfDay < _T.StartTime.TimeOfDay) {
+				_State = false;
+				_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = " Business Object not Set" });
+
+			}
 
 			return _State;
 		}
