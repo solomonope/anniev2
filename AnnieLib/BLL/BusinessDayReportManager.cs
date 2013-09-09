@@ -17,6 +17,12 @@ namespace BitworkSystem.Annie.BLL
             m_Repository = Repository;
         }
 
+	
+		public bool  UpSert(BusinessDayReport _BusinessDayReport)
+		{
+			return false;
+
+		}
 
 		public	bool Validate(List<ValidationError> _ValidationErrors)
 		{
