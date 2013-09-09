@@ -1,11 +1,13 @@
-﻿using BitworkSystem.Annie.BLL.Contract;
-using BitworkSystem.Annie.BO;
-using BitworkSystem.Annie.DAL.Contract;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text;
+using System.Text.RegularExpressions;
+using BitworkSystem.Annie.BLL.Contract;
+using BitworkSystem.Annie.BO;
+using BitworkSystem.Annie.DAL.Contract;
 
 namespace BitworkSystem.Annie.BLL
 {
@@ -16,21 +18,42 @@ namespace BitworkSystem.Annie.BLL
        {
            m_Repository = Repository;
        }
-       public int Upsert(BusinessDay BusinessDay)
+		public bool Upsert(BusinessDay BusinessDay,List<ValidationError> _ValidationErrors)
        {
            try
            {
-               return (int)ResponseCodes.Failed;
+
+				if(_ValidationErrors == null)
+				{
+					_ValidationErrors = new List<ValidationError>();
+					
+				}
+				if(BusinessDay == null)
+				{
+					_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = " Business Object not Set" });
+					return false;
+				}
+				return false;
            }
            catch (Exception Ew)
            {
-               return (int)ResponseCodes.Failed;
+				return false;
            }
        }
 
 		public bool Validate(List<ValidationError> _ValidationErrors,BusinessDay _T )
 		{
-			return false;
+			bool _State = true;
+			string _RegexId = @"^[A-Za-z0-9]{8}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{12}$";
+			string _RegexDate = @"^\d{1,2}\/\d{1,2}\/\d{4}$";
+
+			if (!Regex.IsMatch (_T.BusinessDayId.ToString (), _RegexId))
+				_State = false;
+
+			if (!Regex.IsMatch ("", ""))
+				_State = false;
+
+			return _State;
 		}
     }
 }
