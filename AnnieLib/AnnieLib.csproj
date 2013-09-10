@@ -83,6 +83,7 @@
     <Compile Include="BO\AppConfig.cs" />
     <Compile Include="BO\ValidationError.cs" />
     <Compile Include="DAL\BusinessDayData.cs" />
+    <Compile Include="DAL\TankData.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

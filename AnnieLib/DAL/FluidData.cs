@@ -42,7 +42,9 @@ namespace BitworkSystem.Annie.DAL
 								{
 									FluidId =  Guid.Parse(_Reader["FluidId"].ToString()),
 									FluidName =  _Reader["FluidName"].ToString(),
-									FluidCode  = _Reader["FluidCode"].ToString()
+									FluidCode  = _Reader["FluidCode"].ToString(),
+									Pumps = null,
+									Tanks = null
 								};
 
 								_Fluids.Add(_Fluid);

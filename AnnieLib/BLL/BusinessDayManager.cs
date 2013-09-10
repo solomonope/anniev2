@@ -8,17 +8,19 @@ using System.Text.RegularExpressions;
 using BitworkSystem.Annie.BLL.Contract;
 using BitworkSystem.Annie.BO;
 using BitworkSystem.Annie.DAL.Contract;
-
+using NLog;
 namespace BitworkSystem.Annie.BLL
 {
    public class BusinessDayManager :IManager<BusinessDay>
     {
        private IRepository<BusinessDay> m_Repository;
+		private Logger m_Logger;
        public BusinessDayManager(IRepository<BusinessDay> Repository)
        {
            m_Repository = Repository;
+			m_Logger = LogManager.GetCurrentClassLogger();
        }
-		public bool Upsert(BusinessDay BusinessDay,List<ValidationError> _ValidationErrors)
+		public bool Save(BusinessDay BusinessDay,List<ValidationError> _ValidationErrors)
        {
            try
            {
@@ -50,6 +52,75 @@ namespace BitworkSystem.Annie.BLL
            }
        }
 
+
+
+		public bool Update(BusinessDay BusinessDay,List<ValidationError> _ValidationErrors){
+
+			try
+			{
+
+				if(_ValidationErrors == null)
+				{
+					_ValidationErrors = new List<ValidationError>();
+
+				}
+				if(BusinessDay == null)
+				{
+					_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = " Business Object not Set" });
+					return false;
+				}
+				if (this.Validate(_T:BusinessDay,_ValidationErrors:_ValidationErrors))
+				{
+					return false;
+				}else
+				{
+
+					return m_Repository.Update(BusinessDay);
+
+				}
+
+			}
+			catch (Exception Ew)
+			{
+				return false;
+			}
+
+
+		}
+
+
+		public bool Delete(BusinessDay _T,List<ValidationError> _ValidationErrors)
+		{
+
+			try
+			{
+
+				if(_ValidationErrors == null)
+				{
+					_ValidationErrors = new List<ValidationError>();
+
+				}
+				if(BusinessDay == null)
+				{
+					_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = " Business Object not Set" });
+					return false;
+				}
+				if (this.Validate(_T:BusinessDay,_ValidationErrors:_ValidationErrors))
+				{
+					return false;
+				}else
+				{
+
+					return m_Repository.Delete(BusinessDay);
+
+				}
+
+			}
+			catch (Exception Ew)
+			{
+				return false;
+			}
+		}
 		public bool Validate(List<ValidationError> _ValidationErrors,BusinessDay _T )
 		{
 			bool _State = true;
@@ -58,33 +129,35 @@ namespace BitworkSystem.Annie.BLL
 
 			if (_T.BusinessDayId == null) {
 				_State = false;
-				_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = " Business Object not Set" });
+				_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = "BussinessDayId is NULL" });
 
 			}
 			if (_T.StartTime == null) {
 				_State = false;
-				_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = " Business Object not Set" });
+				_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = "StartTime is NULL" });
 
 			}
 
-			if (_T.EndTime == null) {
-				_State = false;
-				_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = " Business Object not Set" });
+			if (_T.EndTime != null) {
+				//_State = false;
+				//_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = "EndTime is NULL" });
+
+				if (_T.EndTime.TimeOfDay < _T.StartTime.TimeOfDay) {
+					_State = false;
+					_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = "EndTime Less than Start Time" });
+
+				}
+
 
 			}
 
 			if (_T.StartTime.Date != DateTime.Now.Date) {
 
 				_State = false;
-				_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = " Business Object not Set" });
+				_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = "StartTime is not today" });
 
 			}
 
-			if (_T.EndTime.TimeOfDay < _T.StartTime.TimeOfDay) {
-				_State = false;
-				_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = " Business Object not Set" });
-
-			}
 
 			return _State;
 		}

@@ -12,5 +12,11 @@ namespace Annie.Controllers
         {
             return View ();
         }
+
+		public ActionResult Create()
+		{
+			return View ();
+		}
+
     }
 }

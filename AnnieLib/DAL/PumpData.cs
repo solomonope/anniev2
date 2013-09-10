@@ -44,7 +44,7 @@ namespace BitworkSystem.Annie.DAL
 									PumpSales 		=  	null,
 									FluidId 		=   Guid.Empty,
 									Fluid 			=	null,
-									Serviceable 	=   Convert.ToBoolean(_Reader["Serviceable"]) 
+									Serviceable 	=   Convert.ToBoolean(_Reader["Serviceable"])
 
 								};
 
