@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Text;
 using System.Text.RegularExpressions;
 using BitworkSystem.Annie.BLL.Contract;
 using BitworkSystem.Annie.BO;
@@ -48,11 +47,39 @@ namespace BitworkSystem.Annie.BLL
            }
            catch (Exception Ew)
            {
+				m_Logger.TraceException(Ew.Message, Ew);
 				return false;
            }
        }
 
+		public BusinessDay GetById(string Id)
+		{
+			try
+			{
+				return m_Repository.GetById(Id);
+			}
+			catch(Exception Ew)
+			{
+				m_Logger.TraceException(Ew.Message, Ew);
+				return null;
+			}
 
+		}
+
+		public IQueryable<BusinessDay> GetAll()
+		{
+			try
+			{
+				return m_Repository.All;
+			}
+			catch(Exception Ew)
+			{
+				m_Logger.TraceException(Ew.Message, Ew);
+				return null;
+
+			}
+
+		}
 
 		public bool Update(BusinessDay BusinessDay,List<ValidationError> _ValidationErrors){
 
@@ -82,6 +109,7 @@ namespace BitworkSystem.Annie.BLL
 			}
 			catch (Exception Ew)
 			{
+				m_Logger.TraceException(Ew.Message, Ew);
 				return false;
 			}
 
@@ -100,24 +128,25 @@ namespace BitworkSystem.Annie.BLL
 					_ValidationErrors = new List<ValidationError>();
 
 				}
-				if(BusinessDay == null)
+				if(_T == null)
 				{
 					_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = " Business Object not Set" });
 					return false;
 				}
-				if (this.Validate(_T:BusinessDay,_ValidationErrors:_ValidationErrors))
+				if (this.Validate(_T:_T,_ValidationErrors:_ValidationErrors))
 				{
 					return false;
 				}else
 				{
 
-					return m_Repository.Delete(BusinessDay);
+					return m_Repository.Delete(_T);
 
 				}
 
 			}
 			catch (Exception Ew)
 			{
+				m_Logger.TraceException(Ew.Message, Ew);
 				return false;
 			}
 		}

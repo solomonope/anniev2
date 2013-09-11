@@ -91,4 +91,10 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <ProjectReference Include="..\AnnieLib\AnnieLib.csproj">
+      <Project>{8BD5AB49-AFF5-417F-B12E-22A89B052A3E}</Project>
+      <Name>AnnieLib</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

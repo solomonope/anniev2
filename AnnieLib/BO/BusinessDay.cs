@@ -31,6 +31,8 @@ namespace BitworkSystem.Annie.BO
             get;
             set;
         }
+
+
         public override string ToString()
         {
             return String.Format("Type: BussinessDay|BusinessDayId:{0}|StartTime:{1}|EndTime:{2}|BusinessDayDate:{3}", this.BusinessDayId, this.StartTime, this.EndTime, this.BusinessDayDate);
