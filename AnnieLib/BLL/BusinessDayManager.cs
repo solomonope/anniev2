@@ -171,7 +171,7 @@ namespace BitworkSystem.Annie.BLL
 				//_State = false;
 				//_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = "EndTime is NULL" });
 
-				if (_T.EndTime.TimeOfDay < _T.StartTime.TimeOfDay) {
+				if (_T.EndTime.Value.TimeOfDay < _T.StartTime.Value.TimeOfDay) {
 					_State = false;
 					_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = "EndTime Less than Start Time" });
 
@@ -180,7 +180,7 @@ namespace BitworkSystem.Annie.BLL
 
 			}
 
-			if (_T.StartTime.Date != DateTime.Now.Date) {
+			if (_T.StartTime.Value.Date != DateTime.Now.Date) {
 
 				_State = false;
 				_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = "StartTime is not today" });

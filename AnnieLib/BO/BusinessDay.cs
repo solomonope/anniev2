@@ -16,17 +16,17 @@ namespace BitworkSystem.Annie.BO
         }
 
        
-        public DateTime StartTime
+        public DateTime ? StartTime
         {
             get;
             set;
         }
-        public DateTime EndTime
+        public DateTime ? EndTime
         {
             get;
             set;
         }
-        public DateTime BusinessDayDate
+        public DateTime ? BusinessDayDate
         {
             get;
             set;

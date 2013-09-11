@@ -1,6 +1,6 @@
 using System;
 
-namespace  BitworkSystem.Annie
+namespace BitworkSystem.Annie.BO
 {
 	public enum ErrorCode
 	{

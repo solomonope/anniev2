@@ -6,15 +6,17 @@ using System.Web.Mvc;
 using BitworkSystem.Annie.BLL;
 using BitworkSystem.Annie.BLL.Contract;
 using BitworkSystem.Annie.BO;
-
+using NLog;
 namespace Annie.Controllers
 {
     public class BusinessDayController : Controller
     {
 		IManager<BusinessDay> m_Manager = null;
+		private Logger m_Logger;
 		public BusinessDayController(IManager<BusinessDay> _Manager)
 		{
 			m_Manager = _Manager;
+			m_Logger = LogManager.GetCurrentClassLogger();
 		}
         public ActionResult Index()
         {
@@ -38,7 +40,7 @@ namespace Annie.Controllers
 				var _BusinessDay = new BusinessDay
 				{
 					BusinessDayId = Guid.NewGuid(),
-					StartTime =  DateTime.Now.TimeOfDay,
+					StartTime =  DateTime.Now,
 					EndTime =  null,
 					BusinessDayDate = DateTime.Now.Date,
 
@@ -69,7 +71,7 @@ namespace Annie.Controllers
 			{
 				var _BusinessDay = (m_Manager as BusinessDayManager).GetById(Id);
 
-				_BusinessDay.EndTime = DateTime.Now.TimeOfDay;
+				_BusinessDay.EndTime = DateTime.Now;
 
 				if(_BusinessDay != null)
 				{
@@ -103,7 +105,13 @@ namespace Annie.Controllers
 			{
 				var _ValidationErrors = new List<ValidationError>();
 
-				if ( (m_Manager as BusinessDayManager).Delete(Id,_ValidationErrors) )
+				var _BusinessDay = (m_Manager as BusinessDayManager).GetById(Id);
+				if(_BusinessDay == null)
+				{
+					return null;
+				}
+
+				if ( (m_Manager as BusinessDayManager).Delete(_BusinessDay,_ValidationErrors) )
 				{
 					return null;
 				}else
