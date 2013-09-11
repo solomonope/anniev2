@@ -101,6 +101,16 @@ namespace Annie.Controllers
 		{
 			try
 			{
+				var _ValidationErrors = new List<ValidationError>();
+
+				if ( (m_Manager as BusinessDayManager).Delete(Id,_ValidationErrors) )
+				{
+					return null;
+				}else
+				{
+					return null;
+				}
+
 
 			}
 			catch(Exception Ew)
