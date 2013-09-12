@@ -76,7 +76,11 @@ namespace BitworkSystem.Annie.DAL
 					new MySqlParameter(){ParameterName="@FluidId",MySqlDbType = MySqlDbType.VarChar, Value = _T.FluidId.ToString()}
 
 				};
-                return true;
+
+				int _Count = MySqlHelper.ExecuteNonQuery(AppConfig.ConnString,_Sql,_Parameters.ToArray());
+
+				if(_Count > 0) return true;
+                return false;
             }
             catch (Exception Ew)
             {
@@ -146,7 +150,11 @@ namespace BitworkSystem.Annie.DAL
 					new MySqlParameter(){ParameterName="@FluidId",MySqlDbType = MySqlDbType.VarChar, Value = _T.FluidId.ToString()}
 
 				};
-				return true;
+				 
+				int _Count  =  MySqlHelper.ExecuteNonQuery(AppConfig.ConnString,_Sql,_Parameters.ToArray());
+
+				if(_Count > 0) return true;
+				return false;
 			}
 			catch (Exception Ew)
 			{

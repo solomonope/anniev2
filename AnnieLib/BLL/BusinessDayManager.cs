@@ -31,7 +31,7 @@ namespace BitworkSystem.Annie.BLL
 				}
 				if(BusinessDay == null)
 				{
-					_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = " Business Object not Set" });
+					_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = " BusinessDay Object not Set" });
 					return false;
 				}
 				if (this.Validate(_T:BusinessDay,_ValidationErrors:_ValidationErrors))
@@ -93,7 +93,7 @@ namespace BitworkSystem.Annie.BLL
 				}
 				if(BusinessDay == null)
 				{
-					_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = " Business Object not Set" });
+					_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = " BusinessDay Object not Set" });
 					return false;
 				}
 				if (this.Validate(_T:BusinessDay,_ValidationErrors:_ValidationErrors))
@@ -130,7 +130,7 @@ namespace BitworkSystem.Annie.BLL
 				}
 				if(_T == null)
 				{
-					_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = " Business Object not Set" });
+					_ValidationErrors.Add(new ValidationError{ErrorCode = ErrorCode.NullObject, ErrorMessage = " BusinessDay Object not Set" });
 					return false;
 				}
 				if (this.Validate(_T:_T,_ValidationErrors:_ValidationErrors))

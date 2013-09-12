@@ -7,19 +7,21 @@ using BitworkSystem.Annie.BLL;
 using BitworkSystem.Annie.BLL.Contract;
 using BitworkSystem.Annie.BO;
 using NLog;
+using Annie.ViewModel;
 
 namespace Annie.Controllers
 {
     public class PumpReadingController : Controller
     {
 		private IManager<PumpReading> m_Manager =  null;
+		private IManager<Pump>        m_PumpManager = null;
 		private Logger m_Logger;
 
 
-		public PumpReadingController(IManager<PumpReading> _Manager)
+		public PumpReadingController(IManager<PumpReading> _Manager,IManager<Pump> _PumpManager)
 		{
 			m_Manager = _Manager;
-
+			m_PumpManager = _PumpManager;
 			m_Logger = LogManager.GetCurrentClassLogger();
 
 		}
@@ -33,15 +35,36 @@ namespace Annie.Controllers
 		[HttpGet]
 		public ActionResult Create()
 		{
+			ViewBag.Pumps = (m_PumpManager as PumpManager).GetAll ();
 			return View ();
 		}
 
 		[HttpPost]
-		public ActionResult Create(PumpReading PumpReading)
+		public ActionResult Create(PumpReadingViewModel PumpReadingViewModel)
 		{
 			try
 			{
+				if(ModelState.IsValid)
+				{
+
 				var _ValidationErrors = new List<ValidationError>();
+
+				var PumpReading = new PumpReading
+				{
+						PumpReadingId 	= 	Guid.Parse(PumpReadingViewModel.PumpReadingId),
+						PumpId 			=  	Guid.Parse(PumpReadingViewModel.PumpId),
+						Pump 			=	null,
+						ReadingDate		=  PumpReadingViewModel.ReadingDate,
+						SalesRate       =  PumpReadingViewModel.SalesRate,
+						StartOfBusiness = PumpReadingViewModel.StartOfBusiness,
+						CloseOfBusiness = PumpReadingViewModel.CloseOfBusiness,
+						TotalVolumeSold =  PumpReadingViewModel.TotalVolumeSold,
+						BusinessDayId   = Guid.Parse(""),
+						BusinessDay =  null
+
+
+				};
+
 
 				if((m_Manager as PumpReadingManager).Save(PumpReading,_ValidationErrors) )
 				{
@@ -49,6 +72,12 @@ namespace Annie.Controllers
 				}else
 				{
 					return null;
+				}
+
+				}else
+				{
+					ViewBag.Pumps = (m_PumpManager as PumpManager).GetAll ();
+					return View(PumpReadingViewModel);
 				}
 
 			}

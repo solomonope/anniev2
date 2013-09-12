@@ -19,6 +19,8 @@ namespace BitworkSystem.Annie.BLL
             m_Repository = Repository;
 			m_Logger = LogManager.GetCurrentClassLogger();
         }
+
+
 		public bool Save(PumpReading PumpReading ,List<ValidationError> _ValidationErrors)
 		{
 			try

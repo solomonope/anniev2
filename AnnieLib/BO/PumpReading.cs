@@ -36,10 +36,10 @@ namespace BitworkSystem.Annie.BO
             get;
             set;
         }
-        public double TotalVolumeSold
-        {
-            get;
-            set;
+        public double TotalVolumeSold {
+			get;
+			set;
+            
         }
         public Guid PumpId
         {

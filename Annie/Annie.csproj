@@ -55,6 +55,7 @@
     <Folder Include="Content\" />
     <Folder Include="Models\" />
     <Folder Include="Scripts\" />
+    <Folder Include="Infrastructure\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
@@ -74,6 +75,8 @@
     <Compile Include="Controllers\TankVolumeLoggController.cs" />
     <Compile Include="Controllers\TankActivityController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Models\PumpReadingViewModel.cs" />
+    <Compile Include="Infrastructure\AnnieControllerBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
@@ -84,6 +87,13 @@
     <Content Include="Web.config" />
     <Content Include="Global.asax" />
     <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\BusinessDay\Index.cshtml" />
+    <Content Include="Views\Fluid\Index.cshtml" />
+    <Content Include="Views\Fluid\Create.cshtml" />
+    <Content Include="Views\Fluid\Edit.cshtml" />
+    <Content Include="Views\Pump\Index.cshtml" />
+    <Content Include="Views\Pump\Create.cshtml" />
+    <Content Include="Views\Pump\Edit.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
