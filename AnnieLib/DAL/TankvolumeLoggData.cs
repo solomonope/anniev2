@@ -135,7 +135,7 @@ namespace BitworkSystem.Annie.DAL
 
         public bool Delete(TankVolumeLogg _T)
         {
-			string _Sql = "DELETE FROM TankVolumeLogg where TankVolumeLoggId = @TankVolumeLoggId";
+			string _Sql = "DELETE FROM TankVolumeLogg where TankVolumeLoggId = @TankVolumeLoggId   ";
             try
             {
                 
